@@ -44,12 +44,12 @@
       </div>
     </section>
 
-    <section class="status-card" aria-live="polite" aria-atomic="true">
+    <section class="status-card" aria-label="Aktueller Kaufstatus der PS5">
       <div class="status-header">
         <div><p class="section-index">02 / LIVE-STATUS</p><h2>Verfügbarkeit</h2></div>
         <span class="status-tag" id="statusTag">PRÜFE …</span>
       </div>
-      <div class="status-content">
+      <div class="status-content" role="status" aria-live="polite" aria-atomic="true">
         <div class="status-emblem" id="statusEmblem" aria-hidden="true"><span id="statusSymbol">?</span></div>
         <div>
           <div class="status-text" id="statusText">Status wird geladen</div>
@@ -68,10 +68,23 @@
       </div>
     </section>
 
+    <aside class="install-tip" id="iphoneInstall" aria-label="Zum iPhone-Home-Bildschirm hinzufügen" hidden>
+      <div class="install-tip-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 16V3m0 0L8 7m4-4l4 4M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>
+        </svg>
+      </div>
+      <div class="install-tip-copy">
+        <strong>Als App auf deinem iPhone</strong>
+        <p>In Safari auf <b>Teilen</b> tippen, dann <b>Zum Home-Bildschirm</b> auswählen.</p>
+      </div>
+      <button type="button" id="dismissInstall" class="install-tip-close" aria-label="Hinweis schließen">×</button>
+    </aside>
+
     <section class="lower-grid">
       <section class="info-card">
         <div class="card-heading"><span class="section-index">03 / BENACHRICHTIGUNGEN</span><span aria-hidden="true">↗</span></div>
-        <h2>Erfahre es als Erste:r.</h2>
+        <h2>Push aufs iPhone.</h2>
         <p>Mit der kostenlosen <b>ntfy</b>-App bekommst du eine Push-Nachricht auf dein iPhone, sobald die PS5 als verfügbar erkannt wird.</p>
         <details class="setup-details">
           <summary>Push einrichten <span aria-hidden="true">+</span></summary>
@@ -81,7 +94,7 @@
             <li>In deinem GitHub-Repository unter <b>Settings → Secrets and variables → Actions</b> ein Secret mit Namen <code>NTFY_TOPIC</code> und dem Kanalnamen als Wert anlegen.</li>
             <li>Unter <b>Actions</b> den Workflow <b>PS5 pruefen und Website aktualisieren</b> einmal manuell starten.</li>
           </ol>
-          <button class="small-button" id="generateTopic" type="button">Privaten Kanal erzeugen</button>
+          <button class="small-button" id="generateTopic" type="button">Zufälligen Kanal erzeugen</button>
           <div class="topic-box" id="topicBox" hidden>
             <code id="topicValue"></code>
             <button id="copyTopic" type="button">Kopieren</button>
@@ -97,7 +110,7 @@
     </section>
     <footer>
       <span>UNABHÄNGIGES PRIVATPROJEKT · KEINE VERBINDUNG ZU SONY</span>
-      <span>Stand und Push-Meldungen sind unverbindlich. Die Verfügbarkeit kann sich jederzeit ändern.</span>
+      <span>Verfügbarkeit unverbindlich. „Aktualisieren“ lädt den letzten GitHub-Check; die Shop-Prüfung erfolgt automatisch.</span>
     </footer>
   </main>
   <script src="./app.js" defer></script>

@@ -33,7 +33,7 @@ function render(data) {
     warning.hidden = false;
   } else warning.hidden = true;
   const history = Array.isArray(data.history) ? data.history.slice(-6).reverse() : [];
-  $("historyCount").textContent = `${history.length} Checks`;
+  $("historyCount").textContent = `${history.length} Prüfungen`;
   const list = $("historyList");
   list.replaceChildren();
   if (!history.length) {
@@ -96,3 +96,25 @@ $("copyTopic").addEventListener("click", async () => {
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
 }
+
+
+// iOS Safari: Installationshinweis nur im Browser, nicht in der Home-Bildschirm-App.
+(function setUpIPhoneHomeScreenTip() {
+  const tip = $("iphoneInstall");
+  const dismiss = $("dismissInstall");
+  if (!tip || !dismiss) return;
+  const userAgent = navigator.userAgent || "";
+  const isIOS = /iPhone|iPad|iPod/i.test(userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isInstalled = window.matchMedia("(display-mode: standalone)").matches ||
+    navigator.standalone === true;
+  let hiddenForSession = false;
+  try { hiddenForSession = sessionStorage.getItem("ps5InstallDismissed") === "1"; }
+  catch (_) { /* session storage may be disabled */ }
+  if (isIOS && !isInstalled && !hiddenForSession) tip.hidden = false;
+  dismiss.addEventListener("click", () => {
+    tip.hidden = true;
+    try { sessionStorage.setItem("ps5InstallDismissed", "1"); }
+    catch (_) { /* no persistence available */ }
+  });
+})();
