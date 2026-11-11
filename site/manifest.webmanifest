@@ -1,0 +1,15 @@
+{
+  "name": "PS5 Monitor – Verfügbarkeit",
+  "short_name": "PS5 Monitor",
+  "description": "Überwacht den Kaufstatus der generalüberholten PS5 Slim.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071121",
+  "theme_color": "#071121",
+  "lang": "de-DE",
+  "icons": [
+    {"src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

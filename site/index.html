@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#071121">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PS5 Monitor">
+  <meta name="description" content="Verfügbarkeit einer generalüberholten PlayStation 5 Slim automatisch überwachen.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./app.css">
+  <title>PS5 Monitor · Verfügbarkeit</title>
+</head>
+<body>
+  <div class="ambient ambient-a" aria-hidden="true"></div>
+  <div class="ambient ambient-b" aria-hidden="true"></div>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="PS5 Monitor Startseite">
+        <span class="brand-icon">5</span>
+        <span>PS5 <b>MONITOR</b></span>
+      </a>
+      <span class="topbar-tag"><span class="pulse-dot"></span> AUTO-TRACKING</span>
+    </header>
+
+    <div class="eyebrow">PLAYSTATION DIRECT · DEUTSCHLAND</div>
+    <section class="hero" aria-label="Überwachtes Produkt">
+      <div class="hero-copy">
+        <p class="section-index">01 / PRODUKT</p>
+        <h1>Deine PS5.<br><span>Unser Radar.</span></h1>
+        <p class="hero-desc">Generalüberholte & zertifizierte PlayStation 5 Slim · 1 TB · Disc-Version</p>
+        <div class="product-pills"><span>Refurbished</span><span>PS5 Slim</span><span>Deutschland</span></div>
+      </div>
+      <div class="product-art" aria-label="Stilisierte Spielekonsole" role="img">
+        <div class="glow-disc"></div>
+        <div class="console-back"></div>
+        <div class="console-spine"></div>
+        <div class="console-front"></div>
+        <div class="console-slot"></div>
+        <div class="console-base"></div>
+      </div>
+    </section>
+
+    <section class="status-card" aria-live="polite" aria-atomic="true">
+      <div class="status-header">
+        <div><p class="section-index">02 / LIVE-STATUS</p><h2>Verfügbarkeit</h2></div>
+        <span class="status-tag" id="statusTag">PRÜFE …</span>
+      </div>
+      <div class="status-content">
+        <div class="status-emblem" id="statusEmblem" aria-hidden="true"><span id="statusSymbol">?</span></div>
+        <div>
+          <div class="status-text" id="statusText">Status wird geladen</div>
+          <div class="status-subtext" id="statusSubtext">Die letzte Prüfung wird abgerufen.</div>
+        </div>
+      </div>
+      <div class="status-divider"></div>
+      <div class="metrics">
+        <div class="metric"><span>LETZTE PRÜFUNG</span><strong id="checkedAt">–</strong></div>
+        <div class="metric"><span>PRÜFRHYTHMUS</span><strong>ca. 30 Min.</strong></div>
+      </div>
+      <div class="notice" id="staleNotice" hidden></div>
+      <div class="button-row">
+        <a class="button button-primary" id="shopLink" href="https://www.playstation.com/de-de/ps5/certified-refurbished-ps5-slim/product/PSD001-PSDE00233_59-PS5GRADEDCLIZSLE/" target="_blank" rel="noopener noreferrer">Bei PlayStation prüfen <span aria-hidden="true">↗</span></a>
+        <button class="button button-secondary" type="button" id="refreshButton" aria-label="Status neu laden"><span id="refreshSymbol" aria-hidden="true">↻</span> Aktualisieren</button>
+      </div>
+    </section>
+
+    <section class="lower-grid">
+      <section class="info-card">
+        <div class="card-heading"><span class="section-index">03 / BENACHRICHTIGUNGEN</span><span aria-hidden="true">↗</span></div>
+        <h2>Erfahre es als Erste:r.</h2>
+        <p>Mit der kostenlosen <b>ntfy</b>-App bekommst du eine Push-Nachricht auf dein iPhone, sobald die PS5 als verfügbar erkannt wird.</p>
+        <details class="setup-details">
+          <summary>Push einrichten <span aria-hidden="true">+</span></summary>
+          <ol>
+            <li><a href="https://apps.apple.com/de/app/ntfy/id1625396347" target="_blank" rel="noopener noreferrer">ntfy im App Store</a> installieren.</li>
+            <li>Unten einen privaten Kanal erzeugen und in ntfy über <b>+</b> abonnieren.</li>
+            <li>In deinem GitHub-Repository unter <b>Settings → Secrets and variables → Actions</b> ein Secret mit Namen <code>NTFY_TOPIC</code> und dem Kanalnamen als Wert anlegen.</li>
+            <li>Unter <b>Actions</b> den Workflow <b>PS5 pruefen und Website aktualisieren</b> einmal manuell starten.</li>
+          </ol>
+          <button class="small-button" id="generateTopic" type="button">Privaten Kanal erzeugen</button>
+          <div class="topic-box" id="topicBox" hidden>
+            <code id="topicValue"></code>
+            <button id="copyTopic" type="button">Kopieren</button>
+          </div>
+          <p class="small-note">Der Kanalname ist wie ein Passwort: Nicht öffentlich teilen. Die ntfy.sh-Themen selbst sind öffentlich zugänglich, wenn jemand den Namen kennt.</p>
+        </details>
+      </section>
+      <section class="info-card history-card">
+        <div class="card-heading"><span class="section-index">04 / VERLAUF</span><span class="history-count" id="historyCount">0 Checks</span></div>
+        <h2>Letzte Prüfungen</h2>
+        <div id="historyList" class="history-list"><p class="empty">Noch keine Prüfungen vorhanden.</p></div>
+      </section>
+    </section>
+    <footer>
+      <span>UNABHÄNGIGES PRIVATPROJEKT · KEINE VERBINDUNG ZU SONY</span>
+      <span>Stand und Push-Meldungen sind unverbindlich. Die Verfügbarkeit kann sich jederzeit ändern.</span>
+    </footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
