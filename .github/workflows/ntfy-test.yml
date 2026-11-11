@@ -1,0 +1,33 @@
+name: ntfy Testnachricht aufs iPhone
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  send-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ntfy Secret pruefen
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        shell: bash
+        run: |
+          if [[ -z "$NTFY_TOPIC" ]]; then
+            echo "::error::NTFY_TOPIC fehlt. Unter Settings > Secrets and variables > Actions ein Repository Secret NTFY_TOPIC anlegen."
+            exit 1
+          fi
+
+      - name: Test-Push senden
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --retry 2 --max-time 25 \
+            -H "Title: PS5 Monitor Test" \
+            -H "Priority: default" \
+            -H "Click: https://swayzz90.github.io/ps5/" \
+            --data "Test erfolgreich: Der PS5 Monitor kann Benachrichtigungen senden." \
+            "https://ntfy.sh/${NTFY_TOPIC}"
