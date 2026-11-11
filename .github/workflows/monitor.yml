@@ -1,0 +1,68 @@
+name: PS5 pruefen und Website aktualisieren
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'scripts/**'
+      - '.github/workflows/monitor.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ps5-monitor-und-pages
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository laden
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Lagerbestand pruefen und optional Benachrichtigung schicken
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python scripts/check_stock.py
+
+      - name: Letzten Status fuer die naechste Pruefung speichern
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add site/data/status.json
+          if ! git diff --staged --quiet; then
+            git commit -m 'Status der PS5 aktualisieren [skip ci]'
+            git push
+          fi
+
+      - name: Website als GitHub-Pages-Artefakt hochladen
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: monitor
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Website veroefentlichen
+        id: deployment
+        uses: actions/deploy-pages@v4
