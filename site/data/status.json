@@ -2,18 +2,13 @@
   "product_url": "https://www.playstation.com/de-de/ps5/certified-refurbished-ps5-slim/product/PSD001-PSDE00233_59-PS5GRADEDCLIZSLE/",
   "status": "unavailable",
   "note": "PlayStation meldet: derzeit nicht kaufbar.",
-  "checked_at": "2026-11-13T18:51:10Z",
+  "checked_at": "2026-11-13T19:54:15Z",
   "last_known_status": "unavailable",
   "last_change_at": "2026-11-11T18:50:44Z",
   "available_since": null,
   "notified_for_available_since": null,
   "interval_minutes": 30,
   "history": [
-    {
-      "at": "2026-11-13T07:11:56Z",
-      "status": "unavailable",
-      "note": "PlayStation meldet: derzeit nicht kaufbar."
-    },
     {
       "at": "2026-11-13T08:34:28Z",
       "status": "unavailable",
@@ -66,6 +61,11 @@
     },
     {
       "at": "2026-11-13T18:51:10Z",
+      "status": "unavailable",
+      "note": "PlayStation meldet: derzeit nicht kaufbar."
+    },
+    {
+      "at": "2026-11-13T19:54:15Z",
       "status": "unavailable",
       "note": "PlayStation meldet: derzeit nicht kaufbar."
     }
